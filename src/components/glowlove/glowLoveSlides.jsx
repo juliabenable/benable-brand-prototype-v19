@@ -233,7 +233,7 @@ export function Engagement() {
   const youPct = Math.min(100, (TOTALS.viewER / SCALE_MAX) * 100);
   const avgPct = (TOTALS.benchmark / SCALE_MAX) * 100;
   return (
-    <div className="gl-slide gl-slide--center gl-eng gl-eng--rich gl-eng--clean">
+    <div className="gl-slide gl-slide--center gl-eng">
       {/* 1: hero stat */}
       <span className="gl-eyebrow">Engagement rate</span>
       <div className={`gl-five ${on}`}>5×</div>

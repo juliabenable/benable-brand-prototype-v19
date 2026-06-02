@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote treatments + alternatives · design study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #14111f; color: #fff; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+    .page { max-width: 1340px; margin: 0 auto; padding: 36px 28px 80px; }
+    .back { display: inline-block; font-size: 13px; color: #b4adc8; text-decoration: none; margin-bottom: 22px; opacity: 0.7; }
+    .back:hover { opacity: 1; color: #fff; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b06a9a; margin-bottom: 8px; }
+    h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 36px; letter-spacing: -0.015em; line-height: 1.05; margin: 0 0 10px; color: #fff; }
+    .lead { font-size: 15px; color: #b4adc8; max-width: 820px; line-height: 1.55; margin: 0 0 14px; }
+    .lead b { color: #fff; font-weight: 600; }
+    .lead em { font-style: italic; color: #ffd1ea; font-weight: 500; }
+
+    /* Section headers */
+    .section-h { font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px; color: #fff; margin: 56px 0 6px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 12px; }
+    .section-h .badge { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #14111f; background: linear-gradient(135deg, #ffd76a, #ff9ec7); padding: 4px 10px; border-radius: 999px; }
+    .section-h .badge--cool { background: linear-gradient(135deg, #a0c8ff, #d0a0ff); }
+    .section-h .badge--neutral { background: rgba(255,255,255,0.14); color: #fff; }
+    .section-sub { font-size: 13px; color: #8a82a0; margin: 0 0 24px; max-width: 820px; line-height: 1.55; }
+    .section-sub b { color: #c3a3e0; font-weight: 600; }
+    .section-sub i { color: #ffd1ea; font-style: normal; font-weight: 500; }
+
+    /* Tile grids */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    @media (max-width: 900px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+
+    /* Slide tile — 4:3 to match the deck */
+    .study { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; display: flex; flex-direction: column; padding: 38px 30px 30px; box-shadow: 0 12px 32px rgba(0,0,0,0.32); }
+    .study--lg { padding: 44px 38px 34px; }
+    .study__lbl { position: absolute; top: 12px; left: 14px; z-index: 20; display: inline-flex; align-items: center; gap: 7px; padding: 3px 11px 3px 3px; border-radius: 999px; background: rgba(255,255,255,0.92); backdrop-filter: blur(6px); font-size: 10px; font-weight: 700; color: #2a2342; letter-spacing: 0.04em; }
+    .study__lbl .dot { width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #ff6fae, #a06bff); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 10px; }
+    .study__lbl.lbl--ref .dot { background: rgba(80, 60, 110, 0.45); }
+    .study__lbl.lbl--rec .dot { background: linear-gradient(135deg, #ffd76a, #ff9ec7); color: #2a2342; }
+    .study__lbl.lbl--alt .dot { background: linear-gradient(135deg, #a0c8ff, #d0a0ff); color: #2a2342; }
+
+    /* Slide backdrops — match the deck's actual gradients */
+    .bg-reach { background: linear-gradient(135deg, #e7e9ff 0%, #ffe0ee 52%, #fff0db 100%); color: #2a2342; }
+    .bg-eng   { background: linear-gradient(135deg, #ffe2ec 0%, #ffe9d6 50%, #f3e2ff 100%); color: #2a2342; }
+    .bg-grow  { background: linear-gradient(135deg, #ffe0ea 0%, #ece0fb 50%, #dde8ff 100%); color: #2a2342; }
+
+    /* Mini slide scaffolding */
+    .s-eyebrow { font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #b06a9a; }
+    .s-h2 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.025em; line-height: 1.05; color: #2a2342; margin: 4px 0 6px; }
+    .s-h2--grow { font-size: 24px; }
+    .accent { background: linear-gradient(120deg, #ff6fae, #a06bff 70%); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; padding-bottom: 0.06em; }
+    .s-sub { font-family: 'Inter', sans-serif; font-size: 11px; color: #6b6080; line-height: 1.45; margin: 0 0 14px; max-width: 92%; }
+
+    .ctx { display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%; justify-content: center; }
+    .ctx--left { align-items: flex-start; text-align: left; }
+
+    /* ============================================================
+       CURRENT — three tiles, one per slot.
+       ============================================================ */
+    .study--cur-reach { align-items: center; text-align: center; }
+    .study--cur-reach .q-cur { max-width: 86%; margin: 14px auto 0; padding: 14px 14px 0; border-top: 1px solid rgba(120,92,160,0.18); }
+    .study--cur-reach .q-cur p { font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.4; color: #2a2342; font-weight: 500; margin: 0; }
+    .study--cur-reach .q-cur cite { display: block; margin-top: 8px; font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #8a7fa0; font-style: normal; }
+
+    .study--cur-grow { align-items: flex-start; }
+    .study--cur-grow .q-bold { position: relative; max-width: 82%; margin: 14px 0 0; padding: 28px 4px 0 36px; }
+    .study--cur-grow .q-bold::before { content: '\201C'; position: absolute; top: -10px; left: -4px; font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 86px; line-height: 1; color: rgba(160,107,255,0.22); }
+    .study--cur-grow .q-bold p { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; line-height: 1.3; color: #2a2342; margin: 0; }
+    .study--cur-grow .q-bold cite { display: block; margin-top: 12px; font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #8a7fa0; font-style: normal; }
+
+    .study--cur-eng { align-items: center; text-align: center; justify-content: center; }
+    .study--cur-eng .heroq { display: flex; align-items: flex-start; gap: 10px; max-width: 90%; padding: 14px 18px; background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 16px; margin-top: 12px; }
+    .study--cur-eng .heroq__av { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: #a06bff; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; }
+    .study--cur-eng .heroq__t { font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.35; color: #2a2342; margin: 0; text-align: left; }
+    .study--cur-eng .heroq__meta { display: block; margin-top: 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.06em; color: #8a7fa0; }
+    .study--cur-eng .er { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 62px; line-height: 0.9; letter-spacing: -0.03em; margin: 8px 0 4px; background: linear-gradient(120deg, #ff6fae, #a06bff 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .study--cur-eng .er-sub { font-size: 12px; color: #6b6080; }
+
+    /* ============================================================
+       QUOTE-STYLE OPTIONS (still framed as a quote with attribution)
+       ============================================================ */
+
+    /* A — Magazine pull-quote */
+    .qA { max-width: 86%; margin: 14px auto 0; text-align: left; }
+    .qA__cite { display: block; font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b06a9a; margin: 0 0 12px; }
+    .qA__cite::before { content: ''; display: inline-block; width: 22px; height: 1px; background: currentColor; margin-right: 10px; vertical-align: middle; }
+    .qA__t { font-family: 'Fraunces', serif; font-weight: 500; font-size: 20px; line-height: 1.22; color: #2a2342; margin: 0; letter-spacing: -0.005em; }
+    .qA__t em { font-style: italic; color: #a06bff; }
+
+    /* B — Vertical accent bar */
+    .qB { position: relative; max-width: 86%; margin: 14px auto 0; padding: 4px 0 4px 16px; text-align: left; }
+    .qB::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; border-radius: 2px; background: linear-gradient(180deg, #ff6fae, #a06bff); }
+    .qB__t { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; line-height: 1.45; color: #2a2342; margin: 0; }
+    .qB__cite { display: block; margin-top: 8px; font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 600; color: #8a7fa0; font-style: italic; }
+
+    /* C — Hanging serif */
+    .qC { position: relative; max-width: 84%; margin: 16px auto 0; padding: 16px 4px 0 34px; text-align: left; }
+    .qC::before { content: '\201C'; position: absolute; top: -2px; left: -2px; font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 64px; line-height: 1; color: rgba(160,107,255,0.28); pointer-events: none; }
+    .qC__t { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #2a2342; margin: 0; }
+    .qC__cite { display: block; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8a7fa0; font-style: normal; }
+
+    /* D — Phrase highlight */
+    .qD { max-width: 86%; margin: 18px auto 0; text-align: center; }
+    .qD__t { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; line-height: 1.45; color: #2a2342; margin: 0; }
+    .qD__hi { background: linear-gradient(120deg, #ff6fae, #a06bff 70%); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
+    .qD__cite { display: block; margin-top: 8px; font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 500; color: #8a7fa0; font-style: italic; }
+
+    /* ============================================================
+       NOT-A-QUOTE — reframe entirely. Since the quotes are
+       fabricated, these options own the claim without a source.
+       ============================================================ */
+
+    /* E — Industry insight callout */
+    .qE { max-width: 86%; margin: 14px auto 0; text-align: left; padding: 14px 16px; background: rgba(255,255,255,0.5); border: 1px solid rgba(160,107,255,0.18); border-radius: 12px; backdrop-filter: blur(4px); }
+    .qE__lbl { display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #a06bff; margin: 0 0 8px; }
+    .qE__lbl::before { content: ''; width: 14px; height: 14px; border-radius: 50%; background: linear-gradient(135deg, #ffd76a, #ff9ec7); display: inline-block; }
+    .qE__t { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; line-height: 1.4; color: #2a2342; margin: 0; }
+
+    /* F — Did you know box */
+    .qF { max-width: 84%; margin: 14px auto 0; text-align: left; padding: 16px 18px 14px; background: linear-gradient(120deg, rgba(255,111,174,0.10), rgba(160,107,255,0.10)); border-radius: 14px; }
+    .qF__h { display: block; font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 14px; color: #a06bff; margin: 0 0 6px; }
+    .qF__t { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 13px; line-height: 1.4; color: #2a2342; margin: 0; }
+
+    /* G — Big display claim — no chrome, just the words */
+    .qG { max-width: 88%; margin: 22px auto 0; text-align: center; }
+    .qG__t { font-family: 'Fraunces', serif; font-weight: 600; font-style: italic; font-size: 24px; line-height: 1.18; color: #2a2342; margin: 0; letter-spacing: -0.01em; }
+    .qG__t em { font-style: italic; background: linear-gradient(120deg, #ff6fae, #a06bff 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* H — Stat card — reframe as a data point */
+    .qH { max-width: 84%; margin: 14px auto 0; display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: rgba(255,255,255,0.55); border-radius: 14px; border: 1px solid rgba(255,255,255,0.85); box-shadow: 0 8px 18px rgba(120,80,140,0.10); }
+    .qH__n { flex: 0 0 auto; font-family: 'Inter', sans-serif; font-weight: 900; font-size: 38px; line-height: 0.9; letter-spacing: -0.04em; background: linear-gradient(120deg, #ff6fae, #a06bff 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .qH__b { display: flex; flex-direction: column; min-width: 0; text-align: left; }
+    .qH__t { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12.5px; line-height: 1.35; color: #2a2342; margin: 0; }
+    .qH__src { display: block; margin-top: 6px; font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #8a7fa0; }
+
+    /* I — Inline lede — woven into the slide subtitle */
+    .qI { max-width: 88%; margin: 16px auto 0; text-align: center; }
+    .qI__t { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: 17px; line-height: 1.35; color: #4a4258; margin: 0; }
+    .qI__t b { font-weight: 700; font-style: normal; color: #2a2342; }
+
+    /* J — From Benable — first-party voice */
+    .qJ { max-width: 86%; margin: 14px auto 0; padding: 14px 16px 12px 16px; background: rgba(255,255,255,0.6); border-radius: 14px; border-left: 3px solid #ee4f63; text-align: left; }
+    .qJ__lbl { display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #ee4f63; margin: 0 0 6px; }
+    .qJ__lbl svg { width: 12px; height: 12px; }
+    .qJ__t { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 13px; line-height: 1.4; color: #2a2342; margin: 0; }
+
+    /* K — Sticky note — playful, hand-aside */
+    .qK { max-width: 78%; margin: 14px auto 0; padding: 16px 20px; background: #fff6b8; border-radius: 4px; transform: rotate(-1.5deg); box-shadow: 0 6px 16px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06); text-align: left; }
+    .qK__t { font-family: 'Caveat', 'Kalam', cursive; font-weight: 600; font-size: 18px; line-height: 1.25; color: #2a2342; margin: 0; }
+    .qK__sign { display: block; margin-top: 6px; font-family: 'Caveat', cursive; font-size: 14px; color: #8a7fa0; }
+
+    /* L — Wisdom ticker — eyebrow-styled, no chrome */
+    .qL { max-width: 84%; margin: 18px auto 0; text-align: center; }
+    .qL__t { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 12px; line-height: 1.5; color: #2a2342; margin: 0; letter-spacing: 0.02em; text-transform: uppercase; }
+    .qL__t em { font-style: normal; background: linear-gradient(120deg, #ff6fae, #a06bff 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .qL__sep { display: inline-block; width: 28px; height: 1px; background: #b06a9a; vertical-align: middle; margin: 0 10px; }
+
+    /* M — Footnote / aside — bottom of slide */
+    .qM { position: absolute; bottom: 18px; left: 30px; right: 30px; text-align: center; opacity: 0.78; }
+    .qM__t { font-family: 'Inter', sans-serif; font-size: 10px; line-height: 1.4; color: #6b6080; margin: 0; font-style: italic; }
+    .qM__t b { font-weight: 700; font-style: normal; color: #2a2342; }
+
+    /* For Engagement variants — avatar tucks into cite */
+    .ava-inline { display: inline-flex; align-items: center; gap: 6px; vertical-align: middle; }
+    .ava-inline span { width: 18px; height: 18px; border-radius: 50%; background: #ff6fae; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 9px; }
+
+    /* Notes section */
+    .notes { margin-top: 56px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    @media (max-width: 900px) { .notes { grid-template-columns: 1fr; } }
+    .note { padding: 20px 22px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; }
+    .note h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; color: #fff; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .note h3 .nd { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #ff6fae, #a06bff); color: #fff; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 11px; letter-spacing: 0; flex: 0 0 auto; }
+    .note h3 .tag { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; border-radius: 999px; }
+    .note h3 .tag--q { background: rgba(160,107,255,0.18); color: #c3a3e0; }
+    .note h3 .tag--n { background: rgba(255,215,106,0.18); color: #ffd76a; }
+    .note p { font-size: 13px; line-height: 1.55; color: #b4adc8; margin: 0 0 8px; }
+    .note p b { color: #fff; font-weight: 600; }
+    .note ul { margin: 6px 0 0; padding-left: 18px; }
+    .note li { font-size: 12.5px; line-height: 1.5; color: #a59aba; margin-bottom: 4px; }
+
+    .verdict { margin-top: 36px; padding: 22px 26px; background: linear-gradient(120deg, rgba(255,111,174,0.10), rgba(160,107,255,0.10)); border: 1px solid rgba(160,107,255,0.3); border-radius: 18px; }
+    .verdict h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; color: #ffd1ea; margin: 0 0 10px; }
+    .verdict p { font-size: 14px; line-height: 1.6; color: #e7c9f0; margin: 0 0 8px; }
+    .verdict p b { color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a class="back" href="./">← All design studies</a>
+    <div class="eyebrow">Cross-slide · quotes (+ alternatives)</div>
+    <h1>How we show "quotes"</h1>
+    <p class="lead">Quotes appear on three slides — <b>Reach</b>, <b>Engagement</b>, and <b>Still-Growing</b>. Today each slide uses a different visual treatment, and that's a big part of the deck's incoherence.<br><br>But there's a deeper issue: <em>the Reach and Still-Growing quotes are made up.</em> "Marketing Lab, Brand Growth Report" and "CMO, B2C consumer brand" are stand-ins, not real attributions. So we're not just picking a quote style — we're deciding whether to frame these as quotes at all. This study explores both: <b>four quote-style options</b> (if we commit to the quote framing) and <b>seven non-quote alternatives</b> (where we reframe the content as an industry insight, a data point, a sticky-note aside, etc., owning the claim without inventing a source).</p>
+
+    <!-- ============================================================
+         TODAY — three current quote tiles
+         ============================================================ -->
+    <h2 class="section-h">Today <span class="badge badge--neutral">Reference</span></h2>
+    <p class="section-sub">Three different quote treatments coexisting in the deck. Each is fine alone — together they break the deck's rhythm.</p>
+
+    <div class="grid-3">
+      <div class="study bg-reach study--cur-reach">
+        <span class="study__lbl lbl--ref"><span class="dot">R</span>Reach · today</span>
+        <span class="s-eyebrow" style="margin-top:14px">Brand awareness</span>
+        <div class="s-h2">Over <span class="accent">~5.5K</span><br>people noticed.</div>
+        <div class="q-cur">
+          <p>Awareness is the foundation of every marketing funnel. Every impression compounds.</p>
+          <cite>— Marketing Lab, Brand Growth Report</cite>
+        </div>
+      </div>
+
+      <div class="study bg-eng study--cur-eng">
+        <span class="study__lbl lbl--ref"><span class="dot">E</span>Engagement · today</span>
+        <span class="s-eyebrow" style="margin-top:14px">Engagement rate</span>
+        <div class="er">5×</div>
+        <div class="er-sub">the industry benchmark</div>
+        <div class="heroq">
+          <span class="heroq__av">L</span>
+          <div>
+            <p class="heroq__t">"obsessed with this oil it's literally my whole routine now 😭"</p>
+            <small class="heroq__meta">@linnyboo88 · TikTok</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="study bg-grow study--cur-grow">
+        <span class="study__lbl lbl--ref"><span class="dot">S</span>Still-growing · today</span>
+        <span class="s-eyebrow" style="margin-top:14px">And this is just the start</span>
+        <div class="s-h2 s-h2--grow">Your content is <span class="accent">still growing.</span></div>
+        <p class="s-sub">All of this content is less than two weeks old — and it keeps working for you.</p>
+        <div class="q-bold">
+          <p>Roughly half the value of a creator campaign comes from the months after launch.</p>
+          <cite>— CMO, B2C consumer brand</cite>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUOTE-STYLE — A through D
+         ============================================================ -->
+    <h2 class="section-h">Quote-style options <span class="badge">If we keep the quote framing</span></h2>
+    <p class="section-sub">Same Reach CMO content, four ways to render it as a quote. Use these if we either (a) commit to writing real attributable quotes, or (b) accept that "Marketing Lab" reads as plausibly real enough.</p>
+
+    <div class="grid-2">
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl"><span class="dot">A</span>Magazine pull-quote</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qA">
+            <span class="qA__cite">Marketing Lab · Brand Growth Report</span>
+            <p class="qA__t">Awareness is the foundation of every marketing funnel. <em>Every impression compounds</em> — they're the seeds of tomorrow's customers.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl"><span class="dot">B</span>Vertical accent bar</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qB">
+            <p class="qB__t">Awareness is the foundation of every marketing funnel. Every impression compounds — they're the seeds of tomorrow's customers.</p>
+            <span class="qB__cite">— Marketing Lab, Brand Growth Report</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl"><span class="dot">C</span>Hanging serif</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qC">
+            <p class="qC__t">Awareness is the foundation of every marketing funnel. Every impression compounds — they're the seeds of tomorrow's customers.</p>
+            <span class="qC__cite">— Marketing Lab, Brand Growth Report</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl"><span class="dot">D</span>Phrase highlight</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qD">
+            <p class="qD__t">Awareness is the foundation of every marketing funnel. <span class="qD__hi">Every impression compounds</span> — they're the seeds of tomorrow's customers.</p>
+            <span class="qD__cite">Marketing Lab, Brand Growth Report</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         NOT-A-QUOTE — E through K
+         ============================================================ -->
+    <h2 class="section-h">Not-a-quote alternatives <span class="badge badge--cool">Reframe the content</span></h2>
+    <p class="section-sub">If the source is made up, we don't have to pretend. These options reframe the same idea as <i>industry insight, data point, Benable voice, sticky-note aside,</i> etc. — owning the claim without inventing an attribution.</p>
+
+    <div class="grid-2">
+      <!-- E — Industry insight callout -->
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl lbl--alt"><span class="dot">E</span>Industry insight callout</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qE">
+            <span class="qE__lbl">Industry insight</span>
+            <p class="qE__t">Awareness is the foundation of every funnel. Every impression compounds — they're the seeds of tomorrow's customers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- F — Did you know box -->
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl lbl--alt"><span class="dot">F</span>Did-you-know box</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qF">
+            <span class="qF__h">Did you know?</span>
+            <p class="qF__t">Awareness is the foundation of every funnel — every impression you earn now compounds into customers later.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- G — Big display claim -->
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl lbl--alt"><span class="dot">G</span>Big display claim</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qG">
+            <p class="qG__t">Every impression <em>compounds</em>.<br>Awareness is the seed.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- H — Stat card -->
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl lbl--alt"><span class="dot">H</span>Stat card · data point</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qH">
+            <span class="qH__n">~70%</span>
+            <div class="qH__b">
+              <p class="qH__t">of buyers research a brand for 3+ months before they purchase.</p>
+              <span class="qH__src">Consumer Funnel Benchmark</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- I — Inline lede -->
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl lbl--alt"><span class="dot">I</span>Inline lede · woven in</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qI">
+            <p class="qI__t">And every impression <b>compounds</b> — awareness is the seed of every customer you'll earn next quarter.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- J — From Benable -->
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl lbl--alt"><span class="dot">J</span>From Benable · first-party</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qJ">
+            <span class="qJ__lbl">
+              <svg viewBox="0 0 24 24" fill="#ee4f63" aria-hidden="true"><path d="M12 21s-7-4.5-9-9.5C1 6 5 3 8 4.5c2 1 3.5 3 4 4 .5-1 2-3 4-4 3-1.5 7 1.5 5 7-2 5-9 9.5-9 9.5z"/></svg>
+              From Benable
+            </span>
+            <p class="qJ__t">Awareness is the foundation. Every impression you earn now compounds — keep stacking and the funnel takes care of itself.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- K — Sticky note -->
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl lbl--alt"><span class="dot">K</span>Sticky note · hand-aside</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qK">
+            <p class="qK__t">Every impression compounds — these are the seeds of next quarter's customers ✨</p>
+            <span class="qK__sign">— K.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- L — Wisdom ticker -->
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl lbl--alt"><span class="dot">L</span>Wisdom ticker · minimal</span>
+        <div class="ctx">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <div class="qL">
+            <p class="qL__t">Awareness <em>compounds</em><span class="qL__sep"></span>every impression a seed</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- M — Footnote aside -->
+      <div class="study study--lg bg-reach">
+        <span class="study__lbl lbl--alt"><span class="dot">M</span>Footnote · bottom aside</span>
+        <div class="ctx" style="justify-content:flex-start; padding-top: 14px;">
+          <span class="s-eyebrow">Brand awareness</span>
+          <div class="s-h2">Over <span class="accent">~5.5K</span> people noticed.</div>
+          <p class="s-sub" style="margin-top:10px;">Each dot is one person who saw your brand this campaign.</p>
+        </div>
+        <div class="qM">
+          <p class="qM__t"><b>The funnel principle:</b> every impression compounds — awareness today, customers tomorrow.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         NOTES — trade-offs per option.
+         ============================================================ -->
+    <h2 class="section-h">Trade-offs</h2>
+    <div class="notes">
+      <!-- Quote-style notes -->
+      <div class="note">
+        <h3><span class="nd">A</span>Magazine pull-quote <span class="tag tag--q">Quote</span></h3>
+        <p>Confident + editorial. Cite as eyebrow ABOVE the quote makes the source feel intentional, like an NYT byline.</p>
+        <ul>
+          <li>Takes a lot of vertical space — crowds Reach + Engagement</li>
+          <li>Doesn't translate to creator comments (they need a face)</li>
+          <li>Strong on Still-Growing only</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">B</span>Vertical accent bar <span class="tag tag--q">Quote</span></h3>
+        <p>Unobtrusive but clearly "a quote." Gradient bar borrows from the brand accent.</p>
+        <ul>
+          <li>Cleanest option for long quotes</li>
+          <li>Reads slightly Medium-y / blog-y</li>
+          <li>Cite line feels generic</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">C</span>Hanging serif <span class="tag tag--q">Quote</span></h3>
+        <p>Matches the deck's editorial tone. The decorative <b>"</b> at 64px earns its weight without screaming. Cite reuses the eyebrow style — quote attribution + section labels share one typographic family.</p>
+        <ul>
+          <li>Same treatment scales to all three quote moods</li>
+          <li>Replaces Still-Growing's 140px <b>"</b> (too loud)</li>
+          <li>Avatar tucks into cite line on Engagement</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">D</span>Phrase highlight <span class="tag tag--q">Quote</span></h3>
+        <p>Spotlights the most quotable bit using the brand gradient.</p>
+        <ul>
+          <li>Strongest with short, punchy quotes</li>
+          <li>Falls apart on long quotes — unhighlighted text feels secondary</li>
+          <li>Doubling down on `gl-accent` makes the deck visually monochrome</li>
+        </ul>
+      </div>
+
+      <!-- Not-a-quote notes -->
+      <div class="note">
+        <h3><span class="nd">E</span>Industry insight callout <span class="tag tag--n">Not-a-quote</span></h3>
+        <p>Owns the claim. "Industry insight" eyebrow positions the content as widely-held knowledge, not a quote from any specific person. <b>Honest about being a made-up framing.</b></p>
+        <ul>
+          <li>Soft card chrome separates it from the main slide body</li>
+          <li>Works on Reach + Still-Growing; awkward on Engagement (which has a real person)</li>
+          <li>Probably the safest non-quote option</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">F</span>Did-you-know box <span class="tag tag--n">Not-a-quote</span></h3>
+        <p>Friendly, instructional. Frames the content as a fact the brand might not know.</p>
+        <ul>
+          <li>Italic Fraunces header gives it editorial warmth</li>
+          <li>Reads like an explainer, not a celebration — clashes with the wrap-up's tone</li>
+          <li>Better on Still-Growing than Reach</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">G</span>Big display claim <span class="tag tag--n">Not-a-quote</span></h3>
+        <p>No chrome, no attribution — just the words at big italic Fraunces. The most confident option. Trusts the message.</p>
+        <ul>
+          <li>Tightest hierarchy: h2 → big claim, no card noise</li>
+          <li>Requires VERY good editing — short, punchy claims only</li>
+          <li>Could double as a poster moment for the slide</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">H</span>Stat card · data point <span class="tag tag--n">Not-a-quote</span></h3>
+        <p>Reframes the insight as a number with a source. Most credible-feeling — if we can find a real stat.</p>
+        <ul>
+          <li>Requires real data we can cite (not just a vibe)</li>
+          <li>Visual treatment matches the deck's other stat moments</li>
+          <li>Replaces a quote with a fact — meatier</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">I</span>Inline lede · woven in <span class="tag tag--n">Not-a-quote</span></h3>
+        <p>The "quote" disappears entirely — its message becomes part of the slide's subtitle copy. Most minimal option.</p>
+        <ul>
+          <li>Zero extra chrome — perfect for tight slides</li>
+          <li>Loses the "moment" feel — no callout to pause on</li>
+          <li>Italic Fraunces gives it just enough lift</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">J</span>From Benable · first-party <span class="tag tag--n">Not-a-quote</span></h3>
+        <p>Brand voice. Benable owning the insight directly with the coral heart accent. Honest: <i>we believe this</i>, not <i>some made-up CMO said this</i>.</p>
+        <ul>
+          <li>Reinforces Benable's POV across the deck</li>
+          <li>Could feel self-promotional if overused</li>
+          <li>Pairs naturally with Katie's postcard slide voice</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">K</span>Sticky note · hand-aside <span class="tag tag--n">Not-a-quote</span></h3>
+        <p>Playful, warm. Caveat hand font + yellow paper note + small tilt. Reads as a margin note from someone (Katie?) on a printout.</p>
+        <ul>
+          <li>Echoes the Katie postcard slide</li>
+          <li>Could feel too cute for analytics slides</li>
+          <li>Best as a one-off accent, not a system applied everywhere</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">L</span>Wisdom ticker · minimal <span class="tag tag--n">Not-a-quote</span></h3>
+        <p>Tiny uppercase rule-style line under the headline. Almost no visual weight. Reads as a tagline or a "principle."</p>
+        <ul>
+          <li>Easiest to fit in any slide</li>
+          <li>Almost ignorable — might fail to communicate</li>
+          <li>Strong only with VERY tight copy</li>
+        </ul>
+      </div>
+
+      <div class="note">
+        <h3><span class="nd">M</span>Footnote · bottom aside <span class="tag tag--n">Not-a-quote</span></h3>
+        <p>Pushes the insight to the bottom of the slide as small italic text. Reads as a sidebar / margin note.</p>
+        <ul>
+          <li>Frees up the main slide body</li>
+          <li>Deprioritizes the message — risks being skipped</li>
+          <li>Could work as a consistent "fine print" pattern across slides</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <h3>How to pick</h3>
+      <p><b>Easy heuristic:</b> if we're willing to commit to writing real, attributable industry quotes (or finding actual ones), go with <b>C (Hanging serif)</b> from the quote-style set. It's the most cohesive and scales to creator comments.</p>
+      <p><b>If we're not</b>, the strongest non-quote options are <b>E (Industry insight callout)</b> for honesty, <b>G (Big display claim)</b> for confidence, or <b>H (Stat card)</b> if we can find a real number. <b>E is probably the safest</b>: it keeps the editorial feel, doesn't require finding real data, and doesn't pretend a quote is sourced when it isn't.</p>
+      <p><b>Mixing is also fine.</b> Reach + Still-Growing could use E (industry insight, fabricated-content honesty), while Engagement keeps a quote treatment because its quote is real (a creator comment). The mix is intentional: real quotes get quoted, claims get framed as claims.</p>
+    </div>
+  </div>
+</body>
+</html>
