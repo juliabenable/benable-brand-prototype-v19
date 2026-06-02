@@ -163,6 +163,26 @@
     .qM__t { font-family: 'Inter', sans-serif; font-size: 10px; line-height: 1.4; color: #6b6080; margin: 0; font-style: italic; }
     .qM__t b { font-weight: 700; font-style: normal; color: #2a2342; }
 
+    /* ============================================================
+       N — Industry insight (E + F mix). F's soft pink/purple
+       gradient box + E's uppercase eyebrow title + lightbulb icon.
+       The recommended pattern: brand-coloured chrome that quietly
+       signals "this is a useful aside" without pretending to be
+       a quoted source.
+       ============================================================ */
+    .qN { max-width: 84%; margin: 14px auto 0; text-align: left;
+      padding: 14px 18px 14px;
+      background: linear-gradient(120deg, rgba(255,111,174,0.14), rgba(160,107,255,0.14));
+      border-radius: 14px;
+      border: 1px solid rgba(160,107,255,0.16); }
+    .qN__lbl { display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 800;
+      letter-spacing: 0.16em; text-transform: uppercase; color: #a06bff;
+      margin: 0 0 8px; }
+    .qN__lbl svg { width: 14px; height: 14px; }
+    .qN__t { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 13.5px;
+      line-height: 1.4; color: #2a2342; margin: 0; }
+
     /* For Engagement variants — avatar tucks into cite */
     .ava-inline { display: inline-flex; align-items: center; gap: 6px; vertical-align: middle; }
     .ava-inline span { width: 18px; height: 18px; border-radius: 50%; background: #ff6fae; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 9px; }
@@ -422,6 +442,63 @@
     </div>
 
     <!-- ============================================================
+         N — Recommended mix: E + F + lightbulb.
+         ============================================================ -->
+    <h2 class="section-h">Recommended — Industry insight, E + F mix <span class="badge">★ Pick this</span></h2>
+    <p class="section-sub">F's soft pink/purple gradient background, E's uppercase <b>"Industry insight"</b> eyebrow title, plus a lightbulb icon. Reads as a useful aside without pretending a fake CMO said it. Applied below to Reach + Still-Growing. <i>Engagement keeps a quote treatment</i> (hanging serif C) because its quote is a real creator comment — the mix is intentional.</p>
+
+    <div class="grid-3">
+      <!-- Reach with N -->
+      <div class="study bg-reach" style="align-items:center; text-align:center;">
+        <span class="study__lbl lbl--rec"><span class="dot">N</span>Reach · proposed</span>
+        <span class="s-eyebrow" style="margin-top:14px">Brand awareness</span>
+        <div class="s-h2">Over <span class="accent">~5.5K</span><br>people noticed.</div>
+        <div class="qN">
+          <span class="qN__lbl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18h6"/>
+              <path d="M10 21h4"/>
+              <path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1.5 1.5 1.5 2.5h5c0-1 .7-1.8 1.5-2.5A6 6 0 0 0 12 3z"/>
+            </svg>
+            Industry insight
+          </span>
+          <p class="qN__t">Awareness is the foundation of every funnel. Every impression compounds — they're the seeds of tomorrow's customers.</p>
+        </div>
+      </div>
+
+      <!-- Engagement keeps quote treatment (C — hanging serif) -->
+      <div class="study bg-eng" style="align-items:center; text-align:center;">
+        <span class="study__lbl"><span class="dot">C</span>Engagement · keeps quote</span>
+        <span class="s-eyebrow" style="margin-top:14px">Engagement rate</span>
+        <div class="er" style="font-family:'Inter',sans-serif; font-weight:800; font-size:62px; line-height:0.9; letter-spacing:-0.03em; margin:8px 0 4px; background:linear-gradient(120deg,#ff6fae,#a06bff 70%); -webkit-background-clip:text; background-clip:text; color:transparent;">5×</div>
+        <div class="er-sub" style="font-size:12px; color:#6b6080;">the industry benchmark</div>
+        <div class="qC" style="margin-top:14px; max-width:88%;">
+          <p class="qC__t">obsessed with this oil it's literally my whole routine now 😭</p>
+          <span class="qC__cite ava-inline">— <span>L</span> @linnyboo88 · TikTok</span>
+        </div>
+      </div>
+
+      <!-- Still-Growing with N -->
+      <div class="study bg-grow" style="align-items:flex-start;">
+        <span class="study__lbl lbl--rec"><span class="dot">N</span>Still-growing · proposed</span>
+        <span class="s-eyebrow" style="margin-top:14px">And this is just the start</span>
+        <div class="s-h2 s-h2--grow">Your content is <span class="accent">still growing.</span></div>
+        <p class="s-sub">Less than two weeks old — and it keeps working for you long after launch.</p>
+        <div class="qN" style="margin-top:8px;">
+          <span class="qN__lbl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18h6"/>
+              <path d="M10 21h4"/>
+              <path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1.5 1.5 1.5 2.5h5c0-1 .7-1.8 1.5-2.5A6 6 0 0 0 12 3z"/>
+            </svg>
+            Industry insight
+          </span>
+          <p class="qN__t">Roughly half the value of a creator campaign comes from the months after launch.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
          NOTES — trade-offs per option.
          ============================================================ -->
     <h2 class="section-h">Trade-offs</h2>
@@ -560,10 +637,10 @@
     </div>
 
     <div class="verdict">
-      <h3>How to pick</h3>
-      <p><b>Easy heuristic:</b> if we're willing to commit to writing real, attributable industry quotes (or finding actual ones), go with <b>C (Hanging serif)</b> from the quote-style set. It's the most cohesive and scales to creator comments.</p>
-      <p><b>If we're not</b>, the strongest non-quote options are <b>E (Industry insight callout)</b> for honesty, <b>G (Big display claim)</b> for confidence, or <b>H (Stat card)</b> if we can find a real number. <b>E is probably the safest</b>: it keeps the editorial feel, doesn't require finding real data, and doesn't pretend a quote is sourced when it isn't.</p>
-      <p><b>Mixing is also fine.</b> Reach + Still-Growing could use E (industry insight, fabricated-content honesty), while Engagement keeps a quote treatment because its quote is real (a creator comment). The mix is intentional: real quotes get quoted, claims get framed as claims.</p>
+      <h3>Recommendation — N (E + F mix)</h3>
+      <p>Go with <b>N — Industry insight</b> on Reach + Still-Growing. F's soft pink/purple gradient gives the box brand warmth without it screaming "callout," while E's uppercase eyebrow title + lightbulb icon signals <i>useful aside</i> instead of <i>quoted source</i>. The brand-gradient chrome reuses colours already in `gl-accent`, so the box feels native to the deck.</p>
+      <p><b>Engagement keeps a quote treatment</b> (hanging serif C from the quote-style set) because its quote is a real creator comment — that one we can attribute honestly. The mix is intentional: real quotes get quoted, made-up content gets framed as industry knowledge.</p>
+      <p><b>Refactor would:</b> (1) delete <code>.gl-quote</code> and <code>.gl-quote--bold</code>, (2) add a new <code>.gl-insight</code> component (E+F mix) used on Reach + Still-Growing, (3) keep <code>.gl-eng-heroq</code> on Engagement but restyle it to the hanging-serif pattern with the avatar inline in the cite.</p>
     </div>
   </div>
 </body>
